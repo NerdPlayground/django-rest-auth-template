@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import dj_database_url
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -44,15 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
-    # registration
+    # account registration
     'django.contrib.sites',
     'rest_framework.authtoken',
     'allauth',
     'allauth.account',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    # retrival
+    # account retrival
     'django_rest_passwordreset',
+    # account access
+    'knox',
     # apps
     'appauth',
 ]
@@ -155,6 +158,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": ["knox.auth.TokenAuthentication",],
+}
+
+
+# KNOX SETTINGS
+
+REST_KNOX = {
+    "TOKEN_TTL" : timedelta(days=1),
+    "AUTH_HEADER_PREFIX": "Bearer",
 }
 
 
