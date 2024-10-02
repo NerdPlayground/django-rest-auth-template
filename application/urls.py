@@ -35,6 +35,8 @@ urlpatterns = [
     path(ADMIN_SITE_URL,admin.site.urls),
     path(f"{URL_HEADER}/schema/",SpectacularAPIView.as_view(),name="schema"),
     path(f"{URL_HEADER}/schema/swagger-ui/",SpectacularSwaggerView.as_view(url_name="schema"),name="swagger-ui"),
+    # password/reset/, password/reset/confirm/, password/reset/validate_token/
+    path(f"{URL_HEADER}/password/reset/",include('django_rest_passwordreset.urls',namespace='password_reset')),
     # password/change/
     path(f"{URL_HEADER}/", include("dj_rest_auth.urls")),
     # account-confirm-email/

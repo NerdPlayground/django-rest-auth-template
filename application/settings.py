@@ -44,13 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
-    # authentication
+    # registration
     'django.contrib.sites',
     'rest_framework.authtoken',
     'allauth',
     'allauth.account',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    # retrival
+    'django_rest_passwordreset',
     # apps
     'appauth',
 ]
