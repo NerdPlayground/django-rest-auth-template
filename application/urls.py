@@ -18,7 +18,8 @@ Including another URLconf
 from decouple import config
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path,reverse
+from allauth.account.views import ConfirmEmailView
+from django.urls import re_path,path,reverse,include
 from django.http import HttpResponsePermanentRedirect
 from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 
@@ -34,4 +35,10 @@ urlpatterns = [
     path(ADMIN_SITE_URL,admin.site.urls),
     path(f"{URL_HEADER}/schema/",SpectacularAPIView.as_view(),name="schema"),
     path(f"{URL_HEADER}/schema/swagger-ui/",SpectacularSwaggerView.as_view(url_name="schema"),name="swagger-ui"),
+    # password/change/
+    path(f"{URL_HEADER}/", include("dj_rest_auth.urls")),
+    # account-confirm-email/
+    re_path(f"{URL_HEADER}/registration/account-confirm-email/(?P<key>[-:\w]+)/$",ConfirmEmailView.as_view(),name='account_confirm_email'),
+    # registration/ verify-email/ resend-email/ account-email-verification-sent/
+    path(f"{URL_HEADER}/registration/",include("dj_rest_auth.registration.urls")),
 ]

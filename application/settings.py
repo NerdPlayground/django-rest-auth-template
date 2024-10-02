@@ -44,6 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
+    # authentication
+    'django.contrib.sites',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    # apps
     'appauth',
 ]
 
@@ -55,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'application.urls'
@@ -62,7 +71,9 @@ ROOT_URLCONF = 'application.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR/'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,6 +154,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+
+# DJ-REST-AUTH SETTINGS
+
+REST_AUTH = {
+    'OLD_PASSWORD_FIELD_ENABLED': True, # old password is required during password change
+    'LOGOUT_ON_PASSWORD_CHANGE': True, # forcefully logged out after password change
+}
+
+SITE_ID = 1
+
+
+# ALLAUTH SETTINGS
+
+AUTHENTICATION_BACKENDS = [
+   'django.contrib.auth.backends.ModelBackend', # Needed to login by username in Django admin, regardless of `allauth`
+   'allauth.account.auth_backends.AuthenticationBackend', # `allauth` specific authentication methods, such as login by email
+]
+
+
+# Authentication and Verification
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_ADAPTER = 'appauth.views.CustomAccountAdapter'
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 
 # Application and Schema Documentation
