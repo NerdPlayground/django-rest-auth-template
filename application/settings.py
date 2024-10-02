@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'knox',
     # apps
     'appauth',
+    'profiles',
 ]
 
 MIDDLEWARE = [
