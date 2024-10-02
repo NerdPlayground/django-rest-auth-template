@@ -21,6 +21,7 @@ from django.contrib import admin
 from allauth.account.views import ConfirmEmailView
 from django.urls import re_path,path,reverse,include
 from django.http import HttpResponsePermanentRedirect
+from profiles.views import CurrentUser
 from appauth.views import LoginView,LogoutView,LogoutAllView
 from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 
@@ -37,6 +38,7 @@ urlpatterns = [
     path(f"{URL_HEADER}/schema/",SpectacularAPIView.as_view(),name="schema"),
     path(f"{URL_HEADER}/schema/swagger-ui/",SpectacularSwaggerView.as_view(url_name="schema"),name="swagger-ui"),
     # user endpoints
+    path(f"{URL_HEADER}/user/",CurrentUser.as_view(),name="current-user"),
     path(f"{URL_HEADER}/login/",LoginView.as_view(),name="knox_login"),
     path(f"{URL_HEADER}/logout/",LogoutView.as_view(),name="knox_logout"),
     path(f"{URL_HEADER}/logout/all/",LogoutAllView.as_view(),name="knox_logout_all"),
@@ -48,4 +50,6 @@ urlpatterns = [
     re_path(f"{URL_HEADER}/registration/account-confirm-email/(?P<key>[-:\w]+)/$",ConfirmEmailView.as_view(),name='account_confirm_email'),
     # registration/ verify-email/ resend-email/ account-email-verification-sent/
     path(f"{URL_HEADER}/registration/",include("dj_rest_auth.registration.urls")),
+    # apps endpoints
+    path(f"{URL_HEADER}/users/",include("profiles.urls")),
 ]
