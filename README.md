@@ -12,3 +12,8 @@ This template adds authentication and authorization functionality to the base [D
     - Current logged in user
     - All registered users
     - Search user by username
+
+## Points to consider
+- Add your extra fields in the `Profile` model
+- Include the `fields` varibale in the `ProfileSerializer` - note that setting it to `__all__` also includes the `user` field which is not required
+- Configure the `update` method of the `UserSerializer` to update your fields
